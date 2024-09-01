@@ -18,7 +18,6 @@ export default function FilesPage() {
           className="cursor-pointer w-full max-w-xs"
           onChange={async (e) => {
             const selectedFile = e.target.files?.[0];
-// Lol
             if (selectedFile) {
               await supabase.storage
               .from('files')
