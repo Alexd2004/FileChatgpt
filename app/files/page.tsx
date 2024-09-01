@@ -1,10 +1,13 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function FilesPage() {
   // TODO: request documents from supabase
   const documents: any[] = [];
+
+  const supabase = createClientComponentClient({isSingleton: false});
 
   return (
     <div className="max-w-6xl m-4 sm:m-10 flex flex-col gap-8 grow items-stretch">
@@ -17,7 +20,9 @@ export default function FilesPage() {
             const selectedFile = e.target.files?.[0];
 
             if (selectedFile) {
-              // TODO: Upload the file to supabase storage
+              await supabase.storage
+              .from('files')
+              .upload(`${crypto.randomUUID()}/${selectedFile.name}`, selectedFile); 
             }
           }}
         />
